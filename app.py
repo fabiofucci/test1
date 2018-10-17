@@ -6,6 +6,7 @@ from ResponseDTO import ResponseDTO
 
 import time
 import json
+import os
 
 app = Flask(__name__)
 
@@ -41,4 +42,15 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    svcHost = "0.0.0.0"
+    svcPort = 80
+
+    if os.environ["SVC_HOST"]:
+        svcHost = os.environ["SVC_HOST"]
+        print("CONFIGURAZIONE - [SVC_HOST]: " + svcHost)
+
+    if os.environ["SVC_PORT"]:
+        svcPort = os.environ["SVC_PORT"]
+        print("CONFIGURAZIONE - [SVC_PORT]: " + svcPort)
+
+    app.run(host=svcHost, port=svcPort)
